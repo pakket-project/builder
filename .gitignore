@@ -17,5 +17,5 @@
 build
 
 # debug
-stew-builder
+builder
 cmd/debug.go
