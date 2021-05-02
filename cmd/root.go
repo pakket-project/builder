@@ -9,16 +9,24 @@ import (
 
 var (
 	Version = "v0.0.1"
+	Verbose bool
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "stew-builder",
-	Short: "Package builder for Stew.",
+	Use:     "stew-builder",
+	Short:   "Package builder for Stew.",
+	Version: "v0.0.1",
 }
 
 func Execute() {
+	rootCmd.PersistentFlags().BoolVarP(&Verbose, "verbose", "v", false, "verbose output")
+
+	fmt.Println(Verbose)
+
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
+
+	fmt.Println(Verbose)
 }
