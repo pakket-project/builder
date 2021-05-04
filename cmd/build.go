@@ -43,7 +43,7 @@ var buildCmd = &cobra.Command{
 			panic(err)
 		}
 
-		_, err = util.CreateTempFolder()
+		err = util.CreateTempFolder(p.Package.Name)
 		if err != nil {
 			panic(err)
 		}

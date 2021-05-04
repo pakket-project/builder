@@ -14,15 +14,16 @@ var (
 	Uid         string
 )
 
-func CreateTempFolder() (tmpPath string, err error) {
-	os.MkdirAll(TmpRootPath, 0774)
-
-	tmpPath, err = os.MkdirTemp(TmpRootPath, "pkg")
-	TmpPath = tmpPath
+func CreateTempFolder(pkgName string) (err error) {
+	TmpPath = path.Join(TmpRootPath, pkgName)
 	TmpSrcPath = path.Join(TmpPath, "src")
 	TmpPkgPath = path.Join(TmpPath, "package")
 
-	os.Mkdir(TmpPkgPath, 0774)
+	err = os.MkdirAll(path.Join(TmpRootPath, pkgName), 0774)
+	if err != nil {
+		return err
+	}
 
+	os.Mkdir(TmpPkgPath, 0774)
 	return
 }
