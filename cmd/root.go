@@ -21,12 +21,8 @@ var rootCmd = &cobra.Command{
 func Execute() {
 	rootCmd.PersistentFlags().BoolVarP(&Verbose, "verbose", "v", false, "verbose output")
 
-	fmt.Println(Verbose)
-
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
 	}
-
-	fmt.Println(Verbose)
 }
