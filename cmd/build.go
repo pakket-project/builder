@@ -57,8 +57,6 @@ var buildCmd = &cobra.Command{
 		os.Chdir(util.TmpSrcPath)
 		if err = runner.RunScript(
 			path.Join(versionPath, "package"),
-			"STEW_PKG_PATH="+util.TmpPkgPath,
-			"STEW_SRC_DIR="+util.TmpSrcPath,
 			"STEW_PKG_NAME="+p.Package.Name,
 		); err != nil {
 			panic(err)

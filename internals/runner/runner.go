@@ -3,10 +3,15 @@ package runner
 import (
 	"os"
 	"os/exec"
+
+	"github.com/stewproject/builder/util"
 )
 
 var (
-	scriptEnv = []string{"STEW_CARGO_ARGS=eee"}
+	scriptEnv = []string{
+		"STEW_PKG_PATH=" + util.TmpPkgPath,
+		"STEW_SRC_DIR=" + util.TmpSrcPath,
+	}
 )
 
 func RunScript(script string, env ...string) error {
