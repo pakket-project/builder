@@ -1,8 +1,8 @@
 package cmd
 
 import (
+	"fmt"
 	"os"
-	"os/exec"
 	"path"
 	"runtime"
 
@@ -30,13 +30,12 @@ func init() {
 }
 
 var buildCmd = &cobra.Command{
-	Use:   "build package version GH_org",
+	Use:   "build package_path version",
 	Short: "Build packages",
 	Args:  cobra.MinimumNArgs(2),
 	Run: func(cmd *cobra.Command, args []string) {
 		pkgPath := args[0]
 		version := args[1]
-		GH_org := args[2]
 		versionPath := path.Join(pkgPath, version)
 
 		file, err := os.ReadFile(path.Join(pkgPath, "package.toml"))
@@ -100,13 +99,6 @@ var buildCmd = &cobra.Command{
 			panic(err)
 		}
 
-		tarPath := path.Join(util.TmpPkgRootPath, p.Package.Name+".tar.xz")
-
-		err = archiver.Archive([]string{util.TmpPkgPath}, tarPath)
-		if err != nil {
-			panic(err)
-		}
-
 		var arch string
 		if runtime.GOARCH == "arm64" {
 			arch = "silicon"
@@ -116,13 +108,9 @@ var buildCmd = &cobra.Command{
 			panic("lol wat")
 		}
 
-		uploadCmd := exec.Command("skopeo", "copy", "tarball:"+tarPath, "docker://ghcr.io/"+GH_org+"/packages/"+p.Package.Name+":"+version+"_"+arch)
+		tarPath := path.Join(util.TmpPkgRootPath, fmt.Sprintf("%s-%s-%s.tar.xz", p.Package.Name, version, arch))
 
-		uploadCmd.Stderr = os.Stderr
-		uploadCmd.Stdin = os.Stdin
-		uploadCmd.Stdout = os.Stdout
-
-		err = uploadCmd.Run()
+		err = archiver.Archive([]string{util.TmpPkgPath}, tarPath)
 		if err != nil {
 			panic(err)
 		}
