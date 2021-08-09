@@ -114,5 +114,7 @@ var buildCmd = &cobra.Command{
 		if err != nil {
 			panic(err)
 		}
+
+		fmt.Printf("\n\ndone! tar: %s\npkg path: %s\n", tarPath, util.TmpPkgRootPath)
 	},
 }
