@@ -7,11 +7,11 @@ import (
 	"runtime"
 
 	"github.com/mholt/archiver/v3"
+	"github.com/pakket-project/builder/internals/runner"
+	"github.com/pakket-project/builder/util"
+	"github.com/pakket-project/pakket/internals/pkg"
 	"github.com/pelletier/go-toml"
 	"github.com/spf13/cobra"
-	"github.com/stewproject/builder/internals/runner"
-	"github.com/stewproject/builder/util"
-	"github.com/stewproject/stew/internals/pkg"
 )
 
 type PackageInfo struct {

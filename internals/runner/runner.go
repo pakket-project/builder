@@ -4,7 +4,7 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/stewproject/builder/util"
+	"github.com/pakket-project/builder/util"
 )
 
 var (

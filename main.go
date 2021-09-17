@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/stewproject/builder/cmd"
+	"github.com/pakket-project/builder/cmd"
 )
 
 func main() {
