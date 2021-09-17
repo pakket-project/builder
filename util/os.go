@@ -6,7 +6,7 @@ import (
 )
 
 var (
-	TmpRootPath    = "/var/tmp/stew"
+	TmpRootPath    = "/var/tmp/pakket"
 	TmpPath        string
 	TmpSrcPath     string
 	TmpPkgPath     string

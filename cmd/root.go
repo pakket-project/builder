@@ -13,8 +13,8 @@ var (
 )
 
 var rootCmd = &cobra.Command{
-	Use:     "stew-builder",
-	Short:   "Package builder for Stew.",
+	Use:     "pakket-builder",
+	Short:   "Package builder for Pakket.",
 	Version: "v0.0.1",
 }
 
