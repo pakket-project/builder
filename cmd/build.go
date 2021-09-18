@@ -10,7 +10,7 @@ import (
 	"github.com/pakket-project/builder/internals/runner"
 	"github.com/pakket-project/builder/util"
 	"github.com/pakket-project/pakket/internals/pkg"
-	"github.com/pelletier/go-toml"
+	"github.com/pelletier/go-toml/v2"
 	"github.com/spf13/cobra"
 )
 
