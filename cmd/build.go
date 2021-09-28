@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path"
+	"path/filepath"
 	"runtime"
 
 	"github.com/mholt/archiver/v3"
@@ -25,8 +26,13 @@ type Info struct {
 	Package    PackageInfo `toml:"package"`
 }
 
+var (
+	outputDir string
+)
+
 func init() {
 	rootCmd.AddCommand(buildCmd)
+	buildCmd.Flags().StringVarP(&outputDir, "output", "o", "", "Output directory")
 }
 
 var buildCmd = &cobra.Command{
@@ -34,6 +40,18 @@ var buildCmd = &cobra.Command{
 	Short: "Build packages",
 	Args:  cobra.MinimumNArgs(2),
 	Run: func(cmd *cobra.Command, args []string) {
+		if outputDir != "" {
+			if _, err := os.Stat(outputDir); os.IsNotExist(err) {
+				os.MkdirAll(outputDir, 0755)
+			}
+
+			if abs := filepath.IsAbs(outputDir); !abs {
+				outputDir = filepath.Join(os.Getenv("PWD"), outputDir)
+			}
+
+			util.TmpRootPath = outputDir
+		}
+
 		pkgPath := args[0]
 		version := args[1]
 		versionPath := path.Join(pkgPath, version)
