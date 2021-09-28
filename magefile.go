@@ -45,21 +45,29 @@ func build(arch string, opts BuildOptions) error {
 	}
 
 	var outputName string
-
+	var outputPath string
 	if arch == SiliconArch {
-		outputName = name + "-silicon"
+		outputName = name
+
+		outputPath = path.Join(
+			buildDir,
+			"silicon",
+			"bin",
+			outputName,
+		)
 
 		fmt.Println("Building pakket for Silicon architecture...")
 	} else if arch == IntelArch {
-		outputName = name + "-intel"
+		outputName = name
+
+		outputPath = path.Join(
+			buildDir,
+			"intel", "bin",
+			outputName,
+		)
 
 		fmt.Println("Building pakket for Intel architecture...")
 	}
-
-	outputPath := path.Join(
-		buildDir,
-		outputName,
-	)
 
 	args := []string{
 		"build",
