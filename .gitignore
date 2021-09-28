@@ -20,3 +20,4 @@ build
 # debug
 builder
 cmd/debug.go
+test

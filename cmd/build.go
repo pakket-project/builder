@@ -41,10 +41,6 @@ var buildCmd = &cobra.Command{
 	Args:  cobra.MinimumNArgs(2),
 	Run: func(cmd *cobra.Command, args []string) {
 		if outputDir != "" {
-			if _, err := os.Stat(outputDir); os.IsNotExist(err) {
-				os.MkdirAll(outputDir, 0755)
-			}
-
 			if abs := filepath.IsAbs(outputDir); !abs {
 				outputDir = filepath.Join(os.Getenv("PWD"), outputDir)
 			}
@@ -126,13 +122,13 @@ var buildCmd = &cobra.Command{
 			panic("lol wat")
 		}
 
-		tarPath := path.Join(util.TmpPkgRootPath, fmt.Sprintf("%s-%s-%s.tar.xz", p.Package.Name, version, arch))
+		tarPath := path.Join(util.TmpPath, fmt.Sprintf("%s-%s-%s.tar.xz", p.Package.Name, version, arch))
 
 		err = archiver.Archive([]string{util.TmpPkgPath}, tarPath)
 		if err != nil {
 			panic(err)
 		}
 
-		fmt.Printf("\n\ndone! tar: %s\npkg path: %s\n", tarPath, util.TmpPkgRootPath)
+		fmt.Printf("\n\ndone! tar: %s\npkg path: %s\n", tarPath, util.TmpPkgPath)
 	},
 }

@@ -6,20 +6,18 @@ import (
 )
 
 var (
-	TmpRootPath    = "/var/tmp/pakket"
-	TmpPath        string
-	TmpSrcPath     string
-	TmpPkgPath     string
-	TmpPkgRootPath string
-	Gid            string
-	Uid            string
+	TmpRootPath = "/var/tmp/pakket"
+	TmpPath     string
+	TmpSrcPath  string
+	TmpPkgPath  string
+	Gid         string
+	Uid         string
 )
 
 func CreateTempFolder(pkgName string) (err error) {
 	TmpPath = path.Join(TmpRootPath, pkgName)
 	TmpSrcPath = path.Join(TmpPath, "src")
-	TmpPkgRootPath = path.Join(TmpPath, "package")
-	TmpPkgPath = path.Join(TmpPkgRootPath, pkgName)
+	TmpPkgPath = path.Join(TmpPath, pkgName)
 
 	err = os.RemoveAll(TmpPath)
 	if err != nil {
