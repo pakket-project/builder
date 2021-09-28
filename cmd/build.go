@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"crypto/sha256"
 	"fmt"
 	"os"
 	"path"
@@ -62,7 +63,8 @@ var buildCmd = &cobra.Command{
 			panic(err)
 		}
 
-		file2, err := os.ReadFile(path.Join(versionPath, "metadata.toml"))
+		versionMetadataPath := path.Join(versionPath, "metadata.toml")
+		file2, err := os.ReadFile(versionMetadataPath)
 		if err != nil {
 			panic(err)
 		}
@@ -130,5 +132,30 @@ var buildCmd = &cobra.Command{
 		}
 
 		fmt.Printf("\n\ndone! tar: %s\npkg path: %s\n", tarPath, util.TmpPkgPath)
+
+		// update checksums
+		tarData, err := os.ReadFile(tarPath)
+		if err != nil {
+			panic(err)
+		}
+		checksum := fmt.Sprintf("%x", sha256.Sum256(tarData))
+
+		if arch == "intel" {
+			v.Intel.Checksum = checksum
+		} else if arch == "silicon" {
+			v.Silicon.Checksum = checksum
+		}
+
+		newVersionMetadata, err := toml.Marshal(&v)
+		if err != nil {
+			panic(err)
+		}
+
+		err = os.WriteFile(versionMetadataPath, newVersionMetadata, 0666)
+		if err != nil {
+			panic(err)
+		}
+
+		fmt.Println("wrote checksum to version metadata")
 	},
 }
