@@ -131,8 +131,6 @@ var buildCmd = &cobra.Command{
 			panic(err)
 		}
 
-		fmt.Printf("\n\ndone! tar: %s\npkg path: %s\n", tarPath, util.TmpPkgPath)
-
 		// update checksums
 		tarData, err := os.ReadFile(tarPath)
 		if err != nil {
@@ -156,6 +154,9 @@ var buildCmd = &cobra.Command{
 			panic(err)
 		}
 
-		fmt.Println("wrote checksum to version metadata")
+		fmt.Println("done!")
+		fmt.Printf("tar: %s\n", tarPath)
+		fmt.Printf("pkg path: %s\n", util.TmpPkgPath)
+		fmt.Printf("checksum: %s\n", checksum)
 	},
 }
