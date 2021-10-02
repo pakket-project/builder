@@ -49,7 +49,11 @@ var buildCmd = &cobra.Command{
 			util.TmpRootPath = outputDir
 		}
 
-		pkgPath := args[0]
+		pkgPath, err := filepath.Abs(args[0])
+		if err != nil {
+			panic(err)
+		}
+
 		version := args[1]
 		versionPath := path.Join(pkgPath, version)
 
