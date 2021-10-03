@@ -42,10 +42,10 @@ var buildCmd = &cobra.Command{
 	Args:  cobra.MinimumNArgs(2),
 	Run: func(cmd *cobra.Command, args []string) {
 		if outputDir != "" {
-			if abs := filepath.IsAbs(outputDir); !abs {
-				outputDir = filepath.Join(os.Getenv("PWD"), outputDir)
+			outputDir, err := filepath.Abs(outputDir)
+			if err != nil {
+				panic(err)
 			}
-
 			util.TmpRootPath = outputDir
 		}
 
