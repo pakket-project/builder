@@ -21,3 +21,5 @@ build
 builder
 cmd/debug.go
 test
+tmp
+temp
