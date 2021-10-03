@@ -7,6 +7,7 @@ import (
 	"path"
 	"path/filepath"
 	"runtime"
+	"strings"
 
 	"github.com/mholt/archiver/v3"
 	"github.com/pakket-project/builder/internals/runner"
@@ -142,18 +143,27 @@ var buildCmd = &cobra.Command{
 		}
 		checksum := fmt.Sprintf("%x", sha256.Sum256(tarData))
 
-		if arch == "intel" {
-			v.Intel.Checksum = checksum
-		} else if arch == "silicon" {
-			v.Silicon.Checksum = checksum
+		versionContent := strings.Split(string(file2), "\n")
+
+		// TODO: fix this
+		done := false
+		for i, line := range versionContent {
+			if strings.HasPrefix(line, "checksum") {
+				if strings.Contains(versionContent[i-1], arch) {
+					versionContent[i] = "checksum = '" + checksum + "'"
+					done = true
+				}
+			}
 		}
 
-		newVersionMetadata, err := toml.Marshal(&v)
-		if err != nil {
-			panic(err)
+		if !done {
+			fmt.Printf("tar: %s\n", tarPath)
+			fmt.Printf("pkg path: %s\n", util.TmpPkgPath)
+			fmt.Printf("checksum: %s\n", checksum)
+			panic("ERROR: failed to update metadata.toml with new hash!")
 		}
 
-		err = os.WriteFile(versionMetadataPath, newVersionMetadata, 0666)
+		err = os.WriteFile(versionMetadataPath, []byte(strings.Join(versionContent, "\n")), 0666)
 		if err != nil {
 			panic(err)
 		}
