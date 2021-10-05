@@ -79,6 +79,60 @@ var buildCmd = &cobra.Command{
 			panic(err)
 		}
 
+		// install dependencies
+		for _, dep := range v.Dependencies.Dependencies {
+			var name string
+			var version *string
+
+			if strings.Contains(dep, "@") {
+				splitted := strings.Split(dep, "@")
+				name = splitted[0]
+				version = &splitted[1]
+			} else {
+				name = dep
+				version = nil
+			}
+
+			pkgData, err := pkg.GetPackage(name, version)
+			if err != nil {
+				fmt.Printf("error while installing %s@%s: %s\n", name, *version, err.Error())
+				continue
+			}
+
+			err = pkg.InstallPackage(*pkgData, true)
+			if err != nil {
+				fmt.Printf("error while installing %s@%s: %s\n", name, *version, err.Error())
+				continue
+			}
+		}
+
+		// install build dependencies
+		for _, dep := range v.Dependencies.BuildDependencies {
+			var name string
+			var version *string
+
+			if strings.Contains(dep, "@") {
+				splitted := strings.Split(dep, "@")
+				name = splitted[0]
+				version = &splitted[1]
+			} else {
+				name = dep
+				version = nil
+			}
+
+			pkgData, err := pkg.GetPackage(name, version)
+			if err != nil {
+				fmt.Printf("error while installing %s: %s\n", dep, err.Error())
+				continue
+			}
+
+			err = pkg.InstallPackage(*pkgData, true)
+			if err != nil {
+				fmt.Printf("error while installing %s: %s\n", dep, err.Error())
+				continue
+			}
+		}
+
 		err = util.CreateTempFolder(p.Package.Name)
 		if err != nil {
 			panic(err)
