@@ -3,10 +3,13 @@ package cmd
 import (
 	"crypto/sha256"
 	"fmt"
+	"io/fs"
 	"os"
+	"os/user"
 	"path"
 	"path/filepath"
 	"runtime"
+	"strconv"
 	"strings"
 
 	"github.com/mholt/archiver/v3"
@@ -99,7 +102,7 @@ var buildCmd = &cobra.Command{
 				continue
 			}
 
-			err = pkg.InstallPackage(*pkgData, true)
+			err = pkg.InstallPackage(*pkgData, false)
 			if err != nil {
 				fmt.Printf("error while installing %s@%s: %s\n", name, *version, err.Error())
 				continue
@@ -126,7 +129,7 @@ var buildCmd = &cobra.Command{
 				continue
 			}
 
-			err = pkg.InstallPackage(*pkgData, true)
+			err = pkg.InstallPackage(*pkgData, false)
 			if err != nil {
 				fmt.Printf("error while installing %s: %s\n", dep, err.Error())
 				continue
@@ -142,7 +145,6 @@ var buildCmd = &cobra.Command{
 		if err != nil {
 			panic(err)
 		}
-		defer os.RemoveAll(util.TmpSrcPath)
 
 		os.Chdir(util.TmpSrcPath)
 		err = runner.RunScript(
@@ -218,6 +220,31 @@ var buildCmd = &cobra.Command{
 		}
 
 		err = os.WriteFile(versionMetadataPath, []byte(strings.Join(versionContent, "\n")), 0666)
+		if err != nil {
+			panic(err)
+		}
+
+		err = os.RemoveAll(util.TmpSrcPath)
+		if err != nil {
+			panic(err)
+		}
+
+		user, err := user.Lookup(os.Getenv("SUDO_USER"))
+		if err != nil {
+			panic(err)
+		}
+		uid, err := strconv.Atoi(user.Uid)
+		if err != nil {
+			panic(err)
+		}
+		gid, err := strconv.Atoi(user.Gid)
+		if err != nil {
+			panic(err)
+		}
+
+		err = filepath.WalkDir(util.TmpRootPath, func(path string, d fs.DirEntry, err error) error {
+			return os.Chown(path, uid, gid)
+		})
 		if err != nil {
 			panic(err)
 		}

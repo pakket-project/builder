@@ -245,10 +245,10 @@ github.com/muesli/termenv v0.9.0/go.mod h1:R/LzAKf+suGs4IsO95y7+7DpFHO0KABgnZqtl
 github.com/nwaples/rardecode v1.1.0/go.mod h1:5DzqNKiOdpKKBH87u8VlvAnPZMXcGRhxWkRpHbbfGS0=
 github.com/nwaples/rardecode v1.1.2 h1:Cj0yZY6T1Zx1R7AhTbyGSALm44/Mmq+BAPc4B/p/d3M=
 github.com/nwaples/rardecode v1.1.2/go.mod h1:5DzqNKiOdpKKBH87u8VlvAnPZMXcGRhxWkRpHbbfGS0=
-github.com/pakket-project/pakket v0.0.0-20210917153712-02c160d3788d h1:8nH8lkv0MnhvoQhWlelZa05sSc2gAU3m8loF8C8OXrE=
-github.com/pakket-project/pakket v0.0.0-20210917153712-02c160d3788d/go.mod h1:G0jDIzc226DUzhc+otyecMW0j4bY0clVyCg1dNfkjpA=
 github.com/pakket-project/pakket v0.0.0-20211004224848-28ed7c8c240f h1:vRGvXNSp69hqNyopml3xspOpoYpA9mth0igDwa/P9S8=
 github.com/pakket-project/pakket v0.0.0-20211004224848-28ed7c8c240f/go.mod h1:G0jDIzc226DUzhc+otyecMW0j4bY0clVyCg1dNfkjpA=
+github.com/pakket-project/pakket v0.0.0-20211006141608-4313299720aa h1:VU1nBWdxFJVEi6tnAh1ixd//i69706SudA7Dwr5+g8s=
+github.com/pakket-project/pakket v0.0.0-20211006141608-4313299720aa/go.mod h1:6P+JYAKAqHlyfNGKdemeWu3yjL7E9cAdPzxVoDy05OQ=
 github.com/pascaldekloe/goe v0.0.0-20180627143212-57f6aae5913c/go.mod h1:lzWF7FIEvWOWxwDKqyGYQf6ZUaNfKdP144TG7ZOy1lc=
 github.com/pelletier/go-toml v1.9.3/go.mod h1:u1nR/EPcESfeI/szUZKdtJ0xRNbUoANCkoOuaOx1Y+c=
 github.com/pelletier/go-toml v1.9.4 h1:tjENF6MfZAg8e4ZmZTeWaWiT2vXtsoO6+iuOjFhECwM=
