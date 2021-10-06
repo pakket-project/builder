@@ -8,14 +8,14 @@ import (
 )
 
 var (
-	Version = "v0.0.1"
+	Version = "v0.0.2"
 	Verbose bool
 )
 
 var rootCmd = &cobra.Command{
 	Use:     "pakket-builder",
 	Short:   "Package builder for Pakket.",
-	Version: "v0.0.1",
+	Version: Version,
 }
 
 func Execute() {
