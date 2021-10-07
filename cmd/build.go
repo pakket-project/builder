@@ -98,13 +98,13 @@ var buildCmd = &cobra.Command{
 
 			pkgData, err := pkg.GetPackage(name, version)
 			if err != nil {
-				fmt.Printf("error while installing %s@%s: %s\n", name, *version, err.Error())
+				fmt.Printf("error while installing %s: %s\n", dep, err.Error())
 				continue
 			}
 
 			err = pkg.InstallPackage(*pkgData, false)
 			if err != nil {
-				fmt.Printf("error while installing %s@%s: %s\n", name, *version, err.Error())
+				fmt.Printf("error while installing %s: %s\n", dep, err.Error())
 				continue
 			}
 		}
