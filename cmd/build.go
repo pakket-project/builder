@@ -12,7 +12,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/mholt/archiver/v3"
+	archiver "github.com/go-vela/archiver/v3"
 	"github.com/pakket-project/builder/internals/runner"
 	"github.com/pakket-project/builder/util"
 	"github.com/pakket-project/pakket/internals/pkg"
@@ -152,7 +152,8 @@ var buildCmd = &cobra.Command{
 			"PAKKET_PKG_NAME="+p.Package.Name,
 		)
 		if err != nil {
-			panic(err)
+			fmt.Printf("error running script: %s\n", err.Error())
+			os.Exit(1)
 		}
 
 		infoFile, err := os.Create(path.Join(util.TmpPkgPath, "info.toml"))
@@ -189,7 +190,8 @@ var buildCmd = &cobra.Command{
 
 		err = archiver.Archive([]string{util.TmpPkgPath}, tarPath)
 		if err != nil {
-			panic(err)
+			fmt.Printf("error creating archive %s: %s\n", tarPath, err.Error())
+			os.Exit(1)
 		}
 
 		// update checksums
@@ -200,24 +202,6 @@ var buildCmd = &cobra.Command{
 		checksum := fmt.Sprintf("%x", sha256.Sum256(tarData))
 
 		versionContent := strings.Split(string(file2), "\n")
-
-		// TODO: fix this
-		done := false
-		for i, line := range versionContent {
-			if strings.HasPrefix(line, "checksum") {
-				if strings.Contains(versionContent[i-1], arch) {
-					versionContent[i] = "checksum = '" + checksum + "'"
-					done = true
-				}
-			}
-		}
-
-		if !done {
-			fmt.Printf("tar: %s\n", tarPath)
-			fmt.Printf("pkg path: %s\n", util.TmpPkgPath)
-			fmt.Printf("checksum: %s\n", checksum)
-			panic("ERROR: failed to update metadata.toml with new hash!")
-		}
 
 		err = os.WriteFile(versionMetadataPath, []byte(strings.Join(versionContent, "\n")), 0666)
 		if err != nil {
@@ -247,6 +231,24 @@ var buildCmd = &cobra.Command{
 		})
 		if err != nil {
 			panic(err)
+		}
+
+		// TODO: fix this
+		done := false
+		for i, line := range versionContent {
+			if strings.HasPrefix(line, "checksum") {
+				if strings.Contains(versionContent[i-1], arch) {
+					versionContent[i] = "checksum = '" + checksum + "'"
+					done = true
+				}
+			}
+		}
+
+		if !done {
+			fmt.Printf("tar: %s\n", tarPath)
+			fmt.Printf("pkg path: %s\n", util.TmpPkgPath)
+			fmt.Printf("checksum: %s\n", checksum)
+			panic("ERROR: failed to update metadata.toml with new hash!")
 		}
 
 		fmt.Println("done!")

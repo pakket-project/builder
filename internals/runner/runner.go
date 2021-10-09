@@ -11,7 +11,12 @@ var (
 	scriptEnv []string
 )
 
-func RunScript(script string, env ...string) error {
+func RunScript(script string, env ...string) (err error) {
+	err = os.Chmod(script, 0755)
+	if err != nil {
+		return err
+	}
+
 	cmd := exec.Command(script)
 	scriptEnv = append(scriptEnv, os.Environ()...)
 	scriptEnv = append(scriptEnv, env...)

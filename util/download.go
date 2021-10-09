@@ -5,7 +5,7 @@ import (
 	"path"
 
 	"github.com/cavaliercoder/grab"
-	"github.com/mholt/archiver/v3"
+	"github.com/go-vela/archiver/v3"
 )
 
 // Download archive from URL & decompress
