@@ -194,20 +194,6 @@ var buildCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		// update checksums
-		tarData, err := os.ReadFile(tarPath)
-		if err != nil {
-			panic(err)
-		}
-		checksum := fmt.Sprintf("%x", sha256.Sum256(tarData))
-
-		versionContent := strings.Split(string(file2), "\n")
-
-		err = os.WriteFile(versionMetadataPath, []byte(strings.Join(versionContent, "\n")), 0666)
-		if err != nil {
-			panic(err)
-		}
-
 		err = os.RemoveAll(util.TmpSrcPath)
 		if err != nil {
 			panic(err)
@@ -233,6 +219,15 @@ var buildCmd = &cobra.Command{
 			panic(err)
 		}
 
+		// update checksums
+		tarData, err := os.ReadFile(tarPath)
+		if err != nil {
+			panic(err)
+		}
+		checksum := fmt.Sprintf("%x", sha256.Sum256(tarData))
+
+		versionContent := strings.Split(string(file2), "\n")
+
 		// TODO: fix this
 		done := false
 		for i, line := range versionContent {
@@ -242,6 +237,11 @@ var buildCmd = &cobra.Command{
 					done = true
 				}
 			}
+		}
+
+		err = os.WriteFile(versionMetadataPath, []byte(strings.Join(versionContent, "\n")), 0666)
+		if err != nil {
+			panic(err)
 		}
 
 		if !done {
