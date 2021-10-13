@@ -12,12 +12,16 @@ var (
 )
 
 func RunScript(script string, env ...string) (err error) {
+	// make sure permissions are set correctly
 	err = os.Chmod(script, 0755)
 	if err != nil {
 		return err
 	}
 
-	cmd := exec.Command(script)
+	// run the script
+	cmd := exec.Command("bash", "-euxo", "pipefail", script)
+
+	// set the environment variables
 	scriptEnv = append(scriptEnv, os.Environ()...)
 	scriptEnv = append(scriptEnv, env...)
 	scriptEnv = append(scriptEnv, "PAKKET_PKG_PATH="+util.TmpPkgPath, "PAKKET_SRC_DIR="+util.TmpSrcPath)

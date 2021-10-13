@@ -148,12 +148,12 @@ var buildCmd = &cobra.Command{
 
 		os.Chdir(util.TmpSrcPath)
 		err = runner.RunScript(
-			path.Join(versionPath, "package"),
+			path.Join(versionPath, "package.bash"),
 			"PAKKET_PKG_NAME="+p.Package.Name,
 		)
 		if err != nil {
 			fmt.Printf("error running script: %s\n", err.Error())
-			os.Exit(1)
+			return
 		}
 
 		infoFile, err := os.Create(path.Join(util.TmpPkgPath, "info.toml"))
