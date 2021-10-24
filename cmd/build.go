@@ -102,11 +102,13 @@ var buildCmd = &cobra.Command{
 				continue
 			}
 
-			err = pkg.InstallPackage(*pkgData, false)
+			err = pkg.InstallPackage(*pkgData, false, true)
 			if err != nil {
 				fmt.Printf("error while installing %s: %s\n", dep, err.Error())
 				continue
 			}
+
+			fmt.Printf("installed dependency %s@%s\n", pkgData.PkgDef.Package.Name, pkgData.PkgDef.Package.Version)
 		}
 
 		// install build dependencies
@@ -129,11 +131,13 @@ var buildCmd = &cobra.Command{
 				continue
 			}
 
-			err = pkg.InstallPackage(*pkgData, false)
+			err = pkg.InstallPackage(*pkgData, false, true)
 			if err != nil {
 				fmt.Printf("error while installing %s: %s\n", dep, err.Error())
 				continue
 			}
+
+			fmt.Printf("installed dependency %s@%s\n", pkgData.PkgDef.Package.Name, pkgData.PkgDef.Package.Version)
 		}
 
 		err = util.CreateTempFolder(p.Package.Name)
