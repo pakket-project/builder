@@ -244,6 +244,8 @@ github.com/pakket-project/pakket v0.0.0-20211016122544-f909245abdde h1:27/HDln6J
 github.com/pakket-project/pakket v0.0.0-20211016122544-f909245abdde/go.mod h1:M6le0TNemSXDyg2uYexyy8UKTdB9PlE8jeDID9Kg0Qw=
 github.com/pakket-project/pakket v0.0.0-20211024005457-c0c0ee1a7cc9 h1:HpONIydp8sqQhibXndEZ1I2eJeheYABqjfzv2zO2i7w=
 github.com/pakket-project/pakket v0.0.0-20211024005457-c0c0ee1a7cc9/go.mod h1:M6le0TNemSXDyg2uYexyy8UKTdB9PlE8jeDID9Kg0Qw=
+github.com/pakket-project/pakket v0.0.1-alpha.1 h1:bUFk72j4+BNSiG3CWllxwTuxI7EfIcShbYHVQiAgyPM=
+github.com/pakket-project/pakket v0.0.1-alpha.1/go.mod h1:M6le0TNemSXDyg2uYexyy8UKTdB9PlE8jeDID9Kg0Qw=
 github.com/pascaldekloe/goe v0.0.0-20180627143212-57f6aae5913c/go.mod h1:lzWF7FIEvWOWxwDKqyGYQf6ZUaNfKdP144TG7ZOy1lc=
 github.com/pelletier/go-toml v1.9.3 h1:zeC5b1GviRUyKYd6OJPvBU/mcVDVoL1OhT17FCt5dSQ=
 github.com/pelletier/go-toml v1.9.3/go.mod h1:u1nR/EPcESfeI/szUZKdtJ0xRNbUoANCkoOuaOx1Y+c=

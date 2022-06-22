@@ -7,8 +7,8 @@ import (
 
 	"github.com/pakket-project/builder/cmd"
 	"github.com/pakket-project/builder/util"
-	"github.com/pakket-project/pakket/internals/config"
-	pakketUtil "github.com/pakket-project/pakket/util"
+	"github.com/pakket-project/pakket/config"
+	pakketUtil "github.com/pakket-project/pakket/util/os"
 )
 
 func main() {

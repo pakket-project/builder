@@ -15,7 +15,7 @@ import (
 	archiver "github.com/go-vela/archiver/v3"
 	"github.com/pakket-project/builder/internals/runner"
 	"github.com/pakket-project/builder/util"
-	"github.com/pakket-project/pakket/internals/pkg"
+	"github.com/pakket-project/pakket/pkg"
 	"github.com/pelletier/go-toml/v2"
 	"github.com/spf13/cobra"
 )
@@ -102,7 +102,7 @@ var buildCmd = &cobra.Command{
 				continue
 			}
 
-			err = pkg.InstallPackage(*pkgData, false, true)
+			err = pkgData.Install(false, true)
 			if err != nil {
 				fmt.Printf("error while installing %s: %s\n", dep, err.Error())
 				continue
@@ -131,7 +131,7 @@ var buildCmd = &cobra.Command{
 				continue
 			}
 
-			err = pkg.InstallPackage(*pkgData, false, true)
+			err = pkgData.Install(false, true)
 			if err != nil {
 				fmt.Printf("error while installing %s: %s\n", dep, err.Error())
 				continue
