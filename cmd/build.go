@@ -221,29 +221,20 @@ var buildCmd = &cobra.Command{
 		}
 		checksum := fmt.Sprintf("%x", sha256.Sum256(tarData))
 
-		versionContent := strings.Split(string(file2), "\n")
-
-		// TODO: fix this
-		done := false
-		for i, line := range versionContent {
-			if strings.HasPrefix(line, "checksum") {
-				if strings.Contains(versionContent[i-1], runtime.GOARCH) {
-					versionContent[i] = "checksum = '" + checksum + "'"
-					done = true
-				}
-			}
+		if runtime.GOARCH == "amd64" {
+			v.Amd64.Checksum = checksum
+		} else if runtime.GOARCH == "arm64" {
+			v.Arm64.Checksum = checksum
 		}
 
-		err = os.WriteFile(versionMetadataPath, []byte(strings.Join(versionContent, "\n")), 0666)
+		versionBytes, err := toml.Marshal(&v)
 		if err != nil {
 			panic(err)
 		}
 
-		if !done {
-			fmt.Printf("tar: %s\n", tarPath)
-			fmt.Printf("pkg path: %s\n", util.TmpPkgPath)
-			fmt.Printf("checksum: %s\n", checksum)
-			panic("ERROR: failed to update metadata.toml with new hash!")
+		err = os.WriteFile(versionMetadataPath, versionBytes, 0666)
+		if err != nil {
+			panic(err)
 		}
 
 		fmt.Println("done!")
