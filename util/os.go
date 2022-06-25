@@ -12,7 +12,6 @@ var (
 	TmpPkgPath  string
 	Gid         string
 	Uid         string
-	Arch        string
 )
 
 func CreateTempFolder(pkgName string) (err error) {

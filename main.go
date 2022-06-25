@@ -6,9 +6,7 @@ import (
 	"runtime"
 
 	"github.com/pakket-project/builder/cmd"
-	"github.com/pakket-project/builder/util"
 	"github.com/pakket-project/pakket/config"
-	pakketUtil "github.com/pakket-project/pakket/util/os"
 )
 
 func main() {
@@ -18,13 +16,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	if runtime.GOARCH == "arm64" {
-		util.Arch = "silicon"
-		pakketUtil.Arch = "silicon"
-	} else if runtime.GOARCH == "amd64" {
-		util.Arch = "intel"
-		pakketUtil.Arch = "intel"
-	} else {
+	if !(runtime.GOARCH == "arm64" || runtime.GOARCH == "amd64") {
 		fmt.Println("Unsupported architecture! Pakket only runs on Intel and Apple Silicon based Macs.")
 		os.Exit(1)
 	}

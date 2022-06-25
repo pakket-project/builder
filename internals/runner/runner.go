@@ -3,6 +3,7 @@ package runner
 import (
 	"os"
 	"os/exec"
+	"runtime"
 
 	"github.com/pakket-project/builder/util"
 )
@@ -25,7 +26,7 @@ func RunScript(script string, env ...string) (err error) {
 	scriptEnv = append(scriptEnv, os.Environ()...)
 	scriptEnv = append(scriptEnv, env...)
 	scriptEnv = append(scriptEnv, "PAKKET_PKG_PATH="+util.TmpPkgPath, "PAKKET_SRC_DIR="+util.TmpSrcPath)
-	scriptEnv = append(scriptEnv, "PAKKET_ARCH="+util.Arch)
+	scriptEnv = append(scriptEnv, "PAKKET_ARCH="+runtime.GOARCH)
 	cmd.Env = scriptEnv
 
 	cmd.Stderr = os.Stderr

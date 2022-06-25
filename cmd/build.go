@@ -181,16 +181,7 @@ var buildCmd = &cobra.Command{
 			panic(err)
 		}
 
-		var arch string
-		if runtime.GOARCH == "arm64" {
-			arch = "silicon"
-		} else if runtime.GOARCH == "amd64" {
-			arch = "intel"
-		} else {
-			panic("lol wat")
-		}
-
-		tarPath := path.Join(util.TmpPath, fmt.Sprintf("%s-%s-%s.tar.xz", p.Package.Name, version, arch))
+		tarPath := path.Join(util.TmpPath, fmt.Sprintf("%s-%s-%s.tar.xz", p.Package.Name, version, runtime.GOARCH))
 
 		err = archiver.Archive([]string{util.TmpPkgPath}, tarPath)
 		if err != nil {
@@ -236,7 +227,7 @@ var buildCmd = &cobra.Command{
 		done := false
 		for i, line := range versionContent {
 			if strings.HasPrefix(line, "checksum") {
-				if strings.Contains(versionContent[i-1], arch) {
+				if strings.Contains(versionContent[i-1], runtime.GOARCH) {
 					versionContent[i] = "checksum = '" + checksum + "'"
 					done = true
 				}
